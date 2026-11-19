@@ -4,7 +4,7 @@ export type LogStatus = "warn" | "down" | "ok";
 export type LogRow = { id: string; time: string; name: string; value: string; status: LogStatus; service: string; detail: string };
 
 export const LOGS: LogRow[] = [
-  { id: "type-error", time: "14:03:22", name: "TypeError: x", value: "8", status: "warn", service: "checkout-ui", detail: "Cannot read properties of undefined (reading 'call')" },
+  { id: "type-error", time: "14:03:22", name: "TypeError: x", value: "8", status: "warn", service: "checkout-ui", detail: "Cannot read properties of undefined (reading\u00a0'call')" },
   { id: "api-500", time: "13:58:09", name: "API 500", value: "1", status: "down", service: "tip-jar-api", detail: "POST /record returned 500 in the sample trace" },
   { id: "hydration", time: "12:44:16", name: "Hydration mismatch", value: "4", status: "warn", service: "portfolio-shell", detail: "Server and client markup differ in the sample payload" },
   { id: "asset", time: "11:31:47", name: "Missing asset", value: "2", status: "ok", service: "artblog", detail: "Fallback artwork served; no user-facing break" },

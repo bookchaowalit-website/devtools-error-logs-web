@@ -31,8 +31,8 @@ export function ErrorBoard({ logs = LOGS }: { logs?: LogRow[] }) {
 
         <ul className="ds-stats" aria-label={`${period} at a glance`}>
           <Stat label="Signals" value={visible.length} note={`${totalCount(visible)} occurrences`} />
-          <Stat label="Down" value={counts.down} note="breaks a user flow" />
-          <Stat label="Warning" value={counts.warn} note="needs attention" />
+          <Stat label="Down" value={counts.down} note="breaks a user flow" tone={counts.down ? "red" : undefined} />
+          <Stat label="Warning" value={counts.warn} note="needs attention" tone={counts.warn ? "amber" : undefined} />
           <Stat label="Contained" value={counts.ok} note="fallback served" />
         </ul>
 
@@ -52,7 +52,7 @@ export function ErrorBoard({ logs = LOGS }: { logs?: LogRow[] }) {
                       <span className="ds-row-name"><span className="ds-dot" data-tone={STATUS_TONE[log.status]} aria-hidden="true" />{log.name}</span>
                       <span className="ds-row-detail">{STATUS_WORD[log.status]} · {log.service} · {log.time} UTC</span>
                       <span className="ds-row-value">{log.value}<span className="ds-sr"> occurrences</span></span>
-                      <span className="ds-meter" aria-hidden="true"><span style={{ width: `${shareOfCount(log, visible)}%` }} /></span>
+                      <span className="ds-meter" data-tone={STATUS_TONE[log.status]} aria-hidden="true"><span style={{ width: `${shareOfCount(log, visible)}%` }} /></span>
                     </button>
                   </li>
                 ))}

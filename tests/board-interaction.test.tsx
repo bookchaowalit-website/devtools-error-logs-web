@@ -52,4 +52,16 @@ describe("error board", () => {
     expect(callout()).toContain(LOGS[0].name);
     expect(rows()[0].getAttribute("aria-pressed")).toBe("true");
   });
+
+  it("colours each row's meter like its dot and tones the Down and Warning tiles", () => {
+    for (const row of rows()) {
+      const dot = row.querySelector(".ds-dot")?.getAttribute("data-tone");
+      expect(row.querySelector(".ds-meter")?.getAttribute("data-tone")).toBe(dot);
+    }
+    expect(rows().some((row) => row.querySelector(".ds-meter")?.getAttribute("data-tone") === "red")).toBe(true);
+    const tile = (label: string) => [...host.querySelectorAll(".ds-stat")].find((li) => li.querySelector(".ds-stat-label")?.textContent === label)!;
+    expect(tile("Down").getAttribute("data-tone")).toBe("red");
+    expect(tile("Warning").getAttribute("data-tone")).toBe("amber");
+    expect(tile("Signals").getAttribute("data-tone")).toBeNull();
+  });
 });
