@@ -1,20 +1,13 @@
-# Design direction
+# Error Logs design
 
-## Product world
+Moved onto the shared **Dashboard shell** on 2026-11-19 (see `DASHBOARD.md`; `app/dashboard-shell.css`,
+`components/dashboard-shell.tsx`, `components/dashboard-chart.tsx` and `tests/dashboard-shell.test.tsx` are
+byte-identical copies from sustainability-energy-dashboard-web). The palette is the shell's `--ds-*` tokens (light and
+dark); the old navy/red signal-room palette is retired.
 
-Error Logs is a signal room, not a generic dashboard. The dark board, status lamps, incident rows, and selected incident panel create the feeling of an operator reading a live room while the copy clearly identifies the data as a sample window.
-
-## Visual system
-
-- Palette: signal navy `#111a2f`, panel blue `#182643`, warm ink `#e9edf4`, amber `#f3b34c`, red `#ee6a5d`, and green `#7bd6a2`.
-- Type: `Chakra Petch` for the technical display voice and `Roboto Mono` for log values and timestamps.
-- Composition: sparse signal-room hero, ruled incident table, range control, and a focused detail readout.
-- Motion: selection and state transitions are brief and functional; reduced-motion mode removes nonessential movement.
-
-## Interaction and boundary
-
-The 24h/7d/30d controls switch the sample window, and selecting a row changes the incident readout. This version has no ingestion, alerting, authentication, or production log connection.
-
-## Responsive behavior
-
-The wide incident table becomes a compact signal list on mobile. Service, count, and state remain visible without forcing horizontal scrolling.
+- One question: "Client error signals", with the window, the unit and a `Sample data` pill under it.
+- One period switch (24h / 7d / 30d, `aria-pressed`), four stat tiles (signals, down, warning, contained).
+- Signals list: buttons with `aria-pressed`, a status dot beside the name and the status word in the detail line, a
+  share bar of occurrences. The selected row keeps the accent bar, not only a tint.
+- Open signal panel: a status pill whose tone matches the status (red Down, amber Warning, green Contained).
+- Empty state when a window holds no signals. No chart: the sample has no time series to draw.

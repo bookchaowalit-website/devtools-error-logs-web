@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { LOGS, countByStatus, isRange, logsInRange, pickSelected } from "@/lib/error-logs";
+import { LOGS, countByStatus, isRange, logsInRange, pickSelected, shareOfCount, totalCount } from "@/lib/error-logs";
 
 describe("logsInRange", () => {
   it("shows the three newest rows for 24h and all rows for wider windows", () => {
@@ -33,5 +33,14 @@ describe("countByStatus and isRange", () => {
     expect(isRange("7d")).toBe(true);
     expect(isRange("1y")).toBe(false);
     expect(isRange(undefined)).toBe(false);
+  });
+});
+
+describe("counts and shares", () => {
+  it("adds the sample counts and gives each row a whole-percent share", () => {
+    expect(totalCount(LOGS)).toBe(15);
+    expect(shareOfCount(LOGS[0], LOGS)).toBe(53);
+    expect(shareOfCount(LOGS[0], [])).toBe(0);
+    expect(totalCount([{ ...LOGS[0], value: "n/a" }])).toBe(0);
   });
 });

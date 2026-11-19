@@ -15,9 +15,9 @@ A portfolio visitor who wants to see a calm triage UI: a time window, a signal t
 ## What works today
 
 1. Signal board with four sample rows (time, signal, service, count, state: down / warn / ok).
-2. Window buttons 24h, 7d, 30d. 24h shows the three newest sample rows; 7d and 30d show all four (the sample has no
+2. Window switch 24h, 7d, 30d (Dashboard shell segmented control). 24h shows the three newest sample rows; 7d and 30d show all four (the sample has no
    older rows). If the window hides the open signal, the first visible one opens instead.
-3. Incident panel with the chosen signal's state, name, detail, service and time.
+3. Open-signal panel with the chosen signal's state (pill in the matching colour), name, detail, service and time.
 4. `/api/mcp` answers JSON-RPC with `get_all`, `get_by_id` and `in_range` over the same samples; unknown tools or
    methods get a JSON-RPC error.
 5. Front-end and server errors go to Sentry (errors only, personal data stripped) when `NEXT_PUBLIC_SENTRY_DSN` is set.
@@ -27,7 +27,7 @@ A portfolio visitor who wants to see a calm triage UI: a time window, a signal t
 - No ingestion API or SDK, no stack-trace deduplication, no real-time monitoring across apps, no alerting and no
   measured detection time (claims removed from the portfolio card in the 2026-10 review).
 - Counts and times are fixed sample values. No account, storage or sync; nothing survives a reload.
-- Vercel Analytics and Speed Insights are rendered in the layout (page views and web vitals only).
+- No analytics: Vercel Analytics and Speed Insights were removed on 2026-11-19.
 
 ## Live URL and deploy state
 

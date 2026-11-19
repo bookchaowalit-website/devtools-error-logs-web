@@ -33,3 +33,18 @@ export function countByStatus(logs: LogRow[]): Record<LogStatus, number> {
   for (const log of logs) counts[log.status] += 1;
   return counts;
 }
+
+export const STATUS_WORD: Record<LogStatus, string> = { down: "Down", warn: "Warning", ok: "Contained" };
+export const STATUS_TONE: Record<LogStatus, "red" | "amber" | "green"> = { down: "red", warn: "amber", ok: "green" };
+export const RANGE_LABEL: Record<Range, string> = { "24h": "Last 24 hours", "7d": "Last 7 days", "30d": "Last 30 days" };
+
+/** Total occurrences in a list of rows (the sample counts are strings). */
+export function totalCount(logs: LogRow[]): number {
+  return logs.reduce((sum, log) => sum + (Number(log.value) || 0), 0);
+}
+
+/** A row's share of all occurrences, as a whole percent (0 when there are none). */
+export function shareOfCount(log: LogRow, logs: LogRow[]): number {
+  const total = totalCount(logs);
+  return total ? Math.round(((Number(log.value) || 0) / total) * 100) : 0;
+}
