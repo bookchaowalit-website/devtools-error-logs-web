@@ -29,7 +29,7 @@ export function ErrorBoard({ logs = LOGS }: { logs?: LogRow[] }) {
           <Segmented label="Time window" options={PERIODS} value={range} onChange={setRange} />
         </div>
 
-        <ul className="ds-stats" aria-label={`${period} at a glance`}>
+        <ul className="ds-stats" role="list" aria-label={`${period} at a glance`}>
           <Stat label="Signals" value={visible.length} note={`${totalCount(visible)} occurrences`} />
           <Stat label="Down" value={counts.down} note="breaks a user flow" tone={counts.down ? "red" : undefined} />
           <Stat label="Warning" value={counts.warn} note="needs attention" tone={counts.warn ? "amber" : undefined} />
@@ -45,13 +45,14 @@ export function ErrorBoard({ logs = LOGS }: { logs?: LogRow[] }) {
               </div>
             </div>
             {visible.length ? (
-              <ul className="ds-rows">
+              <ul className="ds-rows" role="list">
                 {visible.map((log) => (
                   <li key={log.id}>
                     <button type="button" className="ds-row" aria-pressed={log.id === selected?.id} onClick={() => setSelectedId(log.id)}>
                       <span className="ds-row-name"><span className="ds-dot" data-tone={STATUS_TONE[log.status]} aria-hidden="true" />{log.name}</span>
                       <span className="ds-row-detail">{STATUS_WORD[log.status]} · {log.service} · {log.time} UTC</span>
-                      <span className="ds-row-value">{log.value}<span className="ds-sr"> occurrences</span></span>
+                      {/* The meter is aria-hidden, so its share is said in words too. */}
+                      <span className="ds-row-value">{log.value}<span className="ds-sr"> occurrences, {shareOfCount(log, visible)}% of all occurrences in the {period.toLowerCase()}</span></span>
                       <span className="ds-meter" data-tone={STATUS_TONE[log.status]} aria-hidden="true"><span style={{ width: `${shareOfCount(log, visible)}%` }} /></span>
                     </button>
                   </li>

@@ -26,6 +26,16 @@ afterEach(() => {
 });
 
 describe("error board", () => {
+  it("says each signal's share in words, as the hidden meter shows it", () => {
+    press(period("7d"));
+    const row = rows().find((r) => r.textContent?.includes("TypeError: x"))!;
+    const meter = row.querySelector<HTMLElement>(".ds-meter span")!.style.width;
+    expect(row.querySelector(".ds-row-value .ds-sr")?.textContent).toBe(` occurrences, ${parseInt(meter)}% of all occurrences in the last 7 days`);
+    // VoiceOver on Safari drops list semantics from list-style: none lists unless the role is explicit.
+    expect(host.querySelector("ul.ds-rows")?.getAttribute("role")).toBe("list");
+    expect(host.querySelector("ul.ds-stats")?.getAttribute("role")).toBe("list");
+  });
+
   it("switches the window with aria-pressed and updates the counts", () => {
     expect(rows()).toHaveLength(4);
     press(period("24h"));
