@@ -2,5 +2,4 @@
 @import "./dashboard-shell.css";
 
 html, body { margin: 0; background: var(--ds-bg); }
-html { scroll-padding-top: 64px; }
 
